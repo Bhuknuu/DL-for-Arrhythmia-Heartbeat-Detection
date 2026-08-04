@@ -58,7 +58,7 @@ flowchart TD
 ## Status
 
 - [x] Phase A: Setup and reproducibility record
-- [~] Phase B: Data loading and exploratory visualization (in progress, annotation filtering and cleanup underway)
+- [x] Phase B: Data loading and exploratory visualization (in progress, annotation filtering and cleanup underway)
 - [ ] Phase C: Patient-grouped k-fold split and class imbalance handling
 - [ ] Phase D: Train the 12-model lineup
 - [ ] Phase E: Evaluation, aggregation, significance testing
