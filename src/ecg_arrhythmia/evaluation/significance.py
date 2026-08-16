@@ -1,6 +1,7 @@
 """Statistical significance testing across cross-validation folds."""
 
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
+
 import numpy as np
 import pandas as pd
 from scipy import stats

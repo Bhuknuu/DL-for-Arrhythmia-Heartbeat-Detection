@@ -1,19 +1,18 @@
 """Dataset creation, beat extraction, and leakage-safe GroupKFold splitting."""
 
 from pathlib import Path
-from typing import Dict, Generator, List, Optional, Tuple, Union
+from typing import Generator, List, Optional, Tuple, Union
+
 import numpy as np
-import pandas as pd
-from sklearn.model_selection import GroupKFold
 import torch
+from sklearn.model_selection import GroupKFold
 from torch.utils.data import Dataset
 
 from ecg_arrhythmia.data.loader import get_available_records, load_record
 from ecg_arrhythmia.data.preprocessor import (
     AAMIMapper,
-    CLASS_TO_IDX,
     normalize_signal,
-    remove_baseline_wander
+    remove_baseline_wander,
 )
 
 
@@ -34,7 +33,7 @@ def extract_beats_from_record(
         symbols: List of original annotation symbols
     """
     sig, sample_indices, symbols, fs = load_record(record_name, data_dir, lead=lead)
-    
+
     if filter_baseline:
         sig = remove_baseline_wander(sig, fs=fs)
     if normalize:
@@ -45,20 +44,20 @@ def extract_beats_from_record(
     valid_symbols = []
     total_len = len(sig)
 
-    for idx, sym in zip(sample_indices, symbols):
+    for idx, sym in zip(sample_indices, symbols, strict=False):
         if not AAMIMapper.is_valid_beat(sym):
             continue
-        
+
         start = idx - window_before
         end = idx + window_after
-        
+
         # Check boundary bounds
         if start < 0 or end > total_len:
             continue
-        
+
         beat = sig[start:end]
         cls_idx = AAMIMapper.map_symbol_to_idx(sym)
-        
+
         if cls_idx is not None and len(beat) == (window_before + window_after):
             beats_list.append(beat)
             labels_list.append(cls_idx)
@@ -87,7 +86,7 @@ def extract_all_beats(
     """
     if records is None:
         records = get_available_records(data_dir)
-    
+
     if max_records is not None:
         records = records[:max_records]
 

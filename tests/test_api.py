@@ -1,7 +1,6 @@
 """Integration tests for FastAPI inference endpoints."""
 
 import numpy as np
-import pytest
 from fastapi.testclient import TestClient
 
 from api.app import app

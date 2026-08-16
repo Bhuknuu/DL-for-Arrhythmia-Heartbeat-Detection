@@ -4,7 +4,7 @@ from ecg_arrhythmia.evaluation.metrics import compute_metrics
 from ecg_arrhythmia.evaluation.significance import (
     compute_pairwise_pvalues,
     paired_ttest,
-    wilcoxon_test
+    wilcoxon_test,
 )
 
 __all__ = [

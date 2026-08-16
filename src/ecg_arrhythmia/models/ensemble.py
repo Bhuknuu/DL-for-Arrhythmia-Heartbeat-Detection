@@ -1,12 +1,11 @@
 """Ensemble and feature fusion models for ECG heartbeat classification."""
 
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
+
 import numpy as np
-from scipy import stats
 import torch
 import torch.nn as nn
-
-from ecg_arrhythmia.models.deep_learning import CNN1D
+from scipy import stats
 
 
 def extract_morphological_features(x: np.ndarray) -> np.ndarray:
@@ -17,7 +16,7 @@ def extract_morphological_features(x: np.ndarray) -> np.ndarray:
     """
     if x.ndim == 3:
         x = x.squeeze(1)
-    
+
     feats = []
     for beat in x:
         mean_val = np.mean(beat)
@@ -30,7 +29,7 @@ def extract_morphological_features(x: np.ndarray) -> np.ndarray:
         energy = np.sum(beat ** 2)
         rms = np.sqrt(np.mean(beat ** 2))
         zero_cross = np.sum(np.diff(np.sign(beat)) != 0)
-        
+
         feats.append([
             mean_val, std_val, skew_val, kurt_val,
             min_val, max_val, p2p_val, energy, rms, zero_cross
@@ -104,8 +103,8 @@ class HeterogeneousEnsemble:
 
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         probs = np.zeros((len(X), 5), dtype=np.float32)
-        
-        for model, weight in zip(self.models, self.weights):
+
+        for model, weight in zip(self.models, self.weights, strict=False):
             if hasattr(model, "predict_proba"):
                 raw_p = model.predict_proba(X)
                 p = np.zeros((len(X), 5), dtype=np.float32)
@@ -120,7 +119,7 @@ class HeterogeneousEnsemble:
             else:
                 p = np.zeros((len(X), 5), dtype=np.float32)
             probs += weight * p
-            
+
         return probs
 
     def predict(self, X: np.ndarray) -> np.ndarray:

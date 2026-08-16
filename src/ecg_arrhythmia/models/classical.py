@@ -1,6 +1,7 @@
 """Classical machine learning models for ECG arrhythmia classification."""
 
-from typing import Any, Dict, Optional
+from typing import Any, Optional
+
 import numpy as np
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -29,9 +30,9 @@ class ClassicalModelWrapper:
     def predict_proba(self, X: np.ndarray, num_classes: int = 5) -> np.ndarray:
         if X.ndim == 3:
             X = X.reshape(X.shape[0], -1)
-        
+
         full_probs = np.zeros((len(X), num_classes), dtype=np.float32)
-        
+
         if hasattr(self.estimator, "predict_proba"):
             raw_probs = self.estimator.predict_proba(X)
             classes = getattr(self.estimator, "classes_", np.arange(raw_probs.shape[1]))

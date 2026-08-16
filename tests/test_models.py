@@ -5,7 +5,7 @@ import pytest
 import torch
 import torch.nn as nn
 
-from ecg_arrhythmia.models.registry import get_model, list_models
+from ecg_arrhythmia.models.registry import get_model
 
 
 @pytest.mark.parametrize("model_name", [
