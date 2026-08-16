@@ -1,16 +1,12 @@
 """Inference engine for real-time ECG beat classification."""
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
+
 import numpy as np
 import torch
 import torch.nn as nn
 
-from ecg_arrhythmia.data.preprocessor import (
-    CLASS_NAMES,
-    IDX_TO_CLASS,
-    normalize_signal,
-    remove_baseline_wander
-)
+from ecg_arrhythmia.data.preprocessor import CLASS_NAMES
 
 
 class Predictor:

@@ -4,7 +4,7 @@ from ecg_arrhythmia.data.dataset import (
     ECGDataset,
     GroupKFoldSplitter,
     extract_all_beats,
-    extract_beats_from_record
+    extract_beats_from_record,
 )
 from ecg_arrhythmia.data.loader import get_available_records, load_record
 from ecg_arrhythmia.data.preprocessor import (
@@ -14,7 +14,7 @@ from ecg_arrhythmia.data.preprocessor import (
     IDX_TO_CLASS,
     AAMIMapper,
     normalize_signal,
-    remove_baseline_wander
+    remove_baseline_wander,
 )
 
 __all__ = [

@@ -1,26 +1,22 @@
 """Model factory and central registry for all 12 benchmark architectures."""
 
 from typing import Any, Callable, Dict, List
-import torch.nn as nn
 
 from ecg_arrhythmia.models.classical import (
     build_gradient_boosting,
     build_logistic_regression,
     build_random_forest,
-    build_svm
+    build_svm,
 )
 from ecg_arrhythmia.models.deep_learning import (
-    MLP,
     CNN1D,
+    FFT2DCNN,
+    MLP,
     AutoencoderClassifier,
     BiLSTM,
     CNNTransformerHybrid,
-    FFT2DCNN
 )
-from ecg_arrhythmia.models.ensemble import (
-    HandcraftedDeepFusionModel,
-    HeterogeneousEnsemble
-)
+from ecg_arrhythmia.models.ensemble import HandcraftedDeepFusionModel, HeterogeneousEnsemble
 
 MODEL_REGISTRY: Dict[str, Callable[..., Any]] = {
     # 1. Linear Baseline

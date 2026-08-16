@@ -1,9 +1,9 @@
 """Deep learning models (PyTorch) for ECG arrhythmia classification."""
 
-from typing import List, Optional, Tuple
+from typing import List, Optional
+
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 
 class MLP(nn.Module):
@@ -19,7 +19,7 @@ class MLP(nn.Module):
         super().__init__()
         if hidden_dims is None:
             hidden_dims = [128, 64, 32]
-        
+
         layers = []
         prev_dim = input_dim
         for h_dim in hidden_dims:
@@ -59,7 +59,7 @@ class CNN1D(nn.Module):
 
         layers = []
         c_in = in_channels
-        for c_out, k_size in zip(conv_channels, kernel_sizes):
+        for c_out, k_size in zip(conv_channels, kernel_sizes, strict=False):
             layers.extend([
                 nn.Conv1d(c_in, c_out, kernel_size=k_size, padding=k_size // 2),
                 nn.BatchNorm1d(c_out),
@@ -125,7 +125,7 @@ class FFT2DCNN(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         if x.ndim == 3:
             x = x.squeeze(1)  # (N, L)
-        
+
         # Compute STFT: (N, freq_bins, time_frames)
         stft = torch.stft(
             x,
@@ -135,7 +135,7 @@ class FFT2DCNN(nn.Module):
             return_complex=True
         )
         spec = torch.abs(stft).unsqueeze(1)  # (N, 1, H, W)
-        
+
         feat = self.conv_blocks(spec)
         pooled = self.global_pool(feat).flatten(1)
         return self.fc(pooled)

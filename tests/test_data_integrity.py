@@ -1,16 +1,10 @@
 """Unit tests for AAMI EC57 label mapping and signal preprocessor."""
 
 import numpy as np
-import pytest
 
 from ecg_arrhythmia.data.preprocessor import (
-    AAMI_MAPPING,
-    CLASS_NAMES,
-    CLASS_TO_IDX,
-    IDX_TO_CLASS,
     AAMIMapper,
     normalize_signal,
-    remove_baseline_wander
 )
 
 

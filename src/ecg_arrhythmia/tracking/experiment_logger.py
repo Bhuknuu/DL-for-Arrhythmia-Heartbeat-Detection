@@ -2,7 +2,8 @@
 
 import json
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional, Union
+
 import numpy as np
 import pandas as pd
 
@@ -46,7 +47,7 @@ class ExperimentLogger:
                         self.mlflow.log_metric(k, float(v))
                 # Log artifacts
                 if artifacts:
-                    for name, path in artifacts.items():
+                    for _name, path in artifacts.items():
                         if Path(path).exists():
                             self.mlflow.log_artifact(path)
                 return run.info.run_id

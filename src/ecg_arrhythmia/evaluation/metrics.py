@@ -1,13 +1,14 @@
 """Evaluation metrics for ECG heartbeat classification."""
 
 from typing import Any, Dict, List, Optional
+
 import numpy as np
 from sklearn.metrics import (
     accuracy_score,
     confusion_matrix,
     f1_score,
     precision_score,
-    recall_score
+    recall_score,
 )
 
 from ecg_arrhythmia.data.preprocessor import CLASS_NAMES
@@ -39,7 +40,6 @@ def compute_metrics(
 
     # Per-class Sensitivity (Recall) and Precision
     per_class_rec = recall_score(y_true, y_pred, average=None, zero_division=0)
-    per_class_prec = precision_score(y_true, y_pred, average=None, zero_division=0)
     per_class_f1 = f1_score(y_true, y_pred, average=None, zero_division=0)
 
     sens_dict = {

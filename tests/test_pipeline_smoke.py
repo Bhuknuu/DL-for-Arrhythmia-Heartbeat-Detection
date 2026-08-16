@@ -1,8 +1,8 @@
 """End-to-end integration and smoke tests."""
 
 from pathlib import Path
+
 import numpy as np
-import pytest
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -17,7 +17,7 @@ from ecg_arrhythmia.models.registry import get_model
 def test_pipeline_end_to_end_smoke():
     """Runs a complete end-to-end smoke test: data extraction -> training -> evaluation -> inference."""
     data_dir = Path("data/raw/mitdb")
-    
+
     if (data_dir / "100.hea").exists():
         beats, labels, _ = extract_beats_from_record("100", data_dir=data_dir)
         # Take small subset for smoke test

@@ -1,11 +1,10 @@
 """WFDB record loader for MIT-BIH Arrhythmia Database."""
 
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Union
+from typing import List, Tuple, Union
+
 import numpy as np
 import wfdb
-
-from ecg_arrhythmia.data.preprocessor import AAMIMapper
 
 
 def load_record(
@@ -43,7 +42,7 @@ def get_available_records(data_dir: Union[str, Path] = "data/raw/mitdb") -> List
     path = Path(data_dir)
     if not path.exists():
         return []
-    
+
     hea_files = path.glob("*.hea")
     records = sorted([f.stem for f in hea_files if not f.stem.startswith(".")])
     return records
