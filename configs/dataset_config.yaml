@@ -1,0 +1,24 @@
+dataset:
+  name: "MIT-BIH Arrhythmia Database"
+  raw_dir: "data/raw/mitdb"
+  interim_dir: "data/interim"
+  processed_dir: "data/processed"
+  sampling_rate: 360
+  window_before_rpeak: 90
+  window_after_rpeak: 110
+  total_window_length: 200
+  default_lead: 0 # Usually MLII (Channel 0)
+  target_classes: ["N", "S", "V", "F", "Q"]
+  
+aami_mapping:
+  N: ["N", "L", "R", "e", "j"]
+  S: ["A", "a", "J", "S"]
+  V: ["V", "E"]
+  F: ["F"]
+  Q: ["/", "f", "Q"]
+
+cross_validation:
+  strategy: "GroupKFold"
+  n_splits: 10
+  group_column: "patient_id"
+  random_seed: 42
